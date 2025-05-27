@@ -2,8 +2,12 @@ name: Hello-World
 
 on:
   push:
-    branches:
-      - hello-world
+#    branches: # wykona się jeżeli wypchniemy commit na branch "hello world"
+#      - hello-world
+    paths:   # wykona się jeżeli zmienimy jakiś plik w folderze "scripts"
+      - 'scripts/**'
+
+
 
 jobs:
   print-hello:
@@ -13,6 +17,17 @@ jobs:
     steps:
       - name: print hello world
         run: echo "Hello World"
+
+      - name: create bash script
+        run: echo "cat /etc/passwd" > ./list_users.sh
+
+      - name: run bash script list_users.sh
+        run: bash ./list_users.sh
+
+      - name: list variables
+        run: printenv
+
+
 
 
 
