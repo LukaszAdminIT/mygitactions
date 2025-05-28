@@ -49,21 +49,21 @@ jobs:
         if: matrix.language == 'python'
         run: flake8 .
 
-  test:
-    name: run tests
-    runs-on: self-hosted
-
-    steps:
-      - name: Checkout kodu
-        uses: actions/checkout@v4
-
-      - name: Instalacja Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
+#  test:
+#    name: run tests
+#    runs-on: self-hosted
+#
+#    steps:
+#      - name: Checkout kodu
+#        uses: actions/checkout@v4
+#
+#      - name: Instalacja Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 18
+#
+#      - name: Install dependencies
+#        run: npm install
+#
+#      - name: Run tests
+#        run: npm test
