@@ -58,7 +58,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Instalacja Node.js
-        if: matrix.language == 'node'
         uses: actions/setup-node@v4
         with:
           node-version: 18
