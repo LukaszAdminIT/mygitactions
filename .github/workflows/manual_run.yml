@@ -1,0 +1,15 @@
+name: manual_run
+
+on:
+  workflow_dispatch:
+    inputs:
+      env_name:
+        description: 'Environment name'
+        required: true
+        default: 'staging'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print chosen environment
+        run: echo "Deploying to environment ${{ github.event.inputs.env_name }}"
