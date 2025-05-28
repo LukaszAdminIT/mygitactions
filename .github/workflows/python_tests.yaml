@@ -27,7 +27,7 @@ jobs:
 
       - name: Instalacja zależności
         if: matrix.language == 'node'
-        run: npm ci
+        run: npm install
 
       - name: Uruchomienie testów
         if: matrix.language == 'node'
@@ -63,7 +63,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Run tests
         run: npm test
