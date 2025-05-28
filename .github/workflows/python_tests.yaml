@@ -3,7 +3,7 @@ name: python_tests
 on:
   push:
     branches:
-      - python_tests
+      - aplication_2
 
 jobs:
   lint:
