@@ -1,0 +1,38 @@
+- reusable workflows
+- jakie są możliwości stowrzenia podobnego pipelinu do tego w AMK - dokumentacja
+- łączenie się po ssh
+- kopiowanie plików na maszynę zdalną
+- utworzenie docker-compose a następnie postawienie kontenera na maszynie zdalnej
+
+
+
+Zadanie 7: Tworzenie własnej akcji
+Cel: Stworzenie własnej akcji w Node.js lub Dockerze.
+
+Opis: Zbuduj prostą akcję (np. sprawdzającą długość commit message) i użyj jej w workflow.
+
+Wskazówki: Stwórz folder action/, action.yml i dodaj do workflow uses: ./action.
+
+
+Zadanie 8: Deployment na zewnętrzny serwer
+Cel: Wdrożenie aplikacji na zewnętrzny serwer (np. VPS).
+
+Opis: Po udanych testach i merge’u do main, automatycznie wdrażaj aplikację via SSH.
+
+Wskazówki: Użyj appleboy/ssh-action i secrets do przechowywania kluczy.
+
+
+Zadanie 9: Monorepo – selektywne uruchamianie jobów
+Cel: W monorepo uruchamiaj job tylko dla zmienionej aplikacji.
+
+Opis: Jeśli zmieniono tylko app1/, uruchom tylko jej pipeline.
+
+Wskazówki: Skorzystaj z paths, if:, lub git diff w skryptach bash.
+
+
+Zadanie 10: Dynamiczne generowanie matrixa
+Cel: Generowanie macierzy buildów dynamicznie na podstawie pliku JSON.
+
+Opis: Wygeneruj plik matrix.json w jednym jobie, użyj go w drugim.
+
+Wskazówki: Skorzystaj z outputs, fromJSON() i workflow_run lub job outputs.

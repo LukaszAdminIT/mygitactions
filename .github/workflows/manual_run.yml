@@ -9,7 +9,7 @@ on:
         default: 'staging'
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Print chosen environment
         run: echo "Deploying to environment ${{ github.event.inputs.env_name }}"
