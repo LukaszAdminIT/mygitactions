@@ -11,8 +11,8 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-    container:
-      image: node:18
+#    container:
+#      image: node:18
 
     steps:
       - name: Set up SSH key
