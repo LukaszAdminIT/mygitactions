@@ -1,4 +1,4 @@
-name: manual deploy
+name: run_apps
 
 on:
   workflow_dispatch:
@@ -20,6 +20,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+          ssh -vvv githubactions@10.250.2.24 exit
           ssh -o StrictHostKeyChecking=no githubactions@10.250.2.24
       - name: run nginx container
         run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.24 "bash /srv/learning/nginx/deploy-nginx.sh"
