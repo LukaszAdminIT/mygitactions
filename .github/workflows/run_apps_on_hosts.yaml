@@ -17,11 +17,11 @@ jobs:
     steps:
       - name: Set up SSH key
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/githubactions
-          chmod 600 ~/.ssh/githubactions
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
           ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25
-          ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
   #    - name: run nginx container
   #      run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
 
