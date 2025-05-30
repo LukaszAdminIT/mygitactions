@@ -23,7 +23,6 @@ jobs:
           mkdir -p $HOME/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
-        shell: bash
 
       - name: Run remote deploy script
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
