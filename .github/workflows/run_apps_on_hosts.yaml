@@ -1,0 +1,26 @@
+name: run_apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      env_name:
+        description: 'Environment name'
+        required: true
+        default: 'staging'
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+#    container:
+#      image: node:18
+
+    steps:
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/githubactions
+          chmod 600 ~/.ssh/githubactions
+          ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 -i /home/.ssh/githubactions
+      - name: run nginx container
+        run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
+
