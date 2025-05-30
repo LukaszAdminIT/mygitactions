@@ -20,7 +20,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/githubactions
           chmod 600 ~/.ssh/githubactions
-          ssh -o StrictHostKeyChecking=no githubactions@10.250.2.24 -i /home/.ssh/githubactions
+          ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 -i /home/.ssh/githubactions
       - name: run nginx container
-        run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.24 "bash /srv/learning/nginx/deploy-nginx.sh"
+        run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
 
