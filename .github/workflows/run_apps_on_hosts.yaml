@@ -15,13 +15,19 @@ jobs:
 #      image: node:18
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Set up SSH key
         run: |
           mkdir -p $HOME/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
-          ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25
-          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
+        shell: bash
+
+      - name: Run remote deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
+
   #    - name: run nginx container
   #      run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
 
