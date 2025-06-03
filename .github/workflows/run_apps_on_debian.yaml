@@ -1,0 +1,35 @@
+name: run_apps_on_debian
+
+on:
+  workflow_dispatch:
+    inputs:
+      env_name:
+        description: 'Environment name'
+        required: true
+        default: 'debian'
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+#    container:
+#      image: node:18
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          echo "$HOME"
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
+
+      - name: Run remote deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash /srv/learning/nginx/deploy-nginx.sh"
+
+      - name: Run remote deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash /srv/learning/postgres/deploy-postgres.sh "
+  #    - name: run nginx container
+  #      run: ssh -o StrictHostKeyChecking=no githubactions@10.250.2.25 "bash /srv/learning/nginx/deploy-nginx.sh"
+
