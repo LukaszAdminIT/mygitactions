@@ -7,6 +7,8 @@
       file:
         path: '{{ item }}'
         state: directory
+        owner: "root"
+        group: "githubactions"
         mode: '0770'
       loop:
         - /srv/learning
@@ -26,6 +28,8 @@
       template:
         src: '../docker/postgres/{{ item }}'
         dest: '/srv/learning/postgres/'
+        owner: "root"
+        group: "githubactions"
         mode: '0770'
 
       loop:
