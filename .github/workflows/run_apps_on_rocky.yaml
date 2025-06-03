@@ -1,12 +1,7 @@
 name: run_apps_on_rocky
 
 on:
-  workflow_dispatch:
-    inputs:
-      env_name:
-        description: 'Environment name'
-        required: true
-        default: 'rocky'
+  workflow_call:
 
 jobs:
   deploy:

@@ -1,12 +1,7 @@
 name: run_apps_on_debian
 
 on:
-  workflow_dispatch:
-    inputs:
-      env_name:
-        description: 'Environment name'
-        required: true
-        default: 'debian'
+  workflow_call:
 
 jobs:
   deploy:
