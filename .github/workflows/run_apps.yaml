@@ -26,10 +26,10 @@ jobs:
           chmod 600 $HOME/.ssh/githubactions
 
       - name: Run nginx deploy script
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@$debian "bash /srv/learning/nginx/deploy-nginx.sh"
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@$10.250.2.24 "bash /srv/learning/nginx/deploy-nginx.sh"
 
       - name: Run postgres deploy script
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@debian "bash /srv/learning/postgres/deploy-postgres.sh "
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash /srv/learning/postgres/deploy-postgres.sh "
   #    - name: run nginx container
   #      run: ssh -o StrictHostKeyChecking=no githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
 
