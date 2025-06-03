@@ -27,9 +27,6 @@ jobs:
           ${{ secrets.SSH_PRIVATE_KEY }}
           EOF
           chmod 600 $HOME/.ssh/githubactions
-      - name: Check key type
-        run: ssh-keygen -lf $HOME/.ssh/githubactions
-
 
       - name: Run nginx deploy script
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
