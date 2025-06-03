@@ -2,15 +2,14 @@ name: aaa
 
 
 on:
-  push:
-    branches: # wykona się jeżeli wypchniemy commit na branch "aaa"
-      - aaa
-      -
+  workflow_dispatch:
+
 jobs:
-  deploy:
-    runs-on: self-hosted
-    #    container:
-    #      image: node:18
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+  debian-workflow:
+    uses: ./.github/workflows/run_apps_on_debian.yaml
+    with:
+      some-input: 'debian'
+  rocky-workflow:
+    uses: ./.github/workflows/run_apps_on_rocky.yaml
+    with:
+      some-input: 'rocky'

@@ -19,6 +19,8 @@
       template:
         src: '../docker/nginx/{{ item }}'
         dest: '/srv/learning/nginx'
+        owner: "root"
+        group: "githubactions"
         mode: '0770'
 
       loop:
