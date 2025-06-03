@@ -17,11 +17,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
+#
       - name: Set up SSH key
         run: |
+          echo "$HOME"
           mkdir -p $HOME/.ssh
-          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
       - name: Run nginx deploy script
@@ -31,5 +32,4 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
   #    - name: run nginx container
   #      run: ssh -o StrictHostKeyChecking=no githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
-      - name: Cleanup SSH key
-        run: rm -f $HOME/.ssh/githubactions
+
