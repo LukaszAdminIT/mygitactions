@@ -1,0 +1,37 @@
+- name: Deploy keycloak_stack application to Docker Swarm
+  hosts: learning
+  become: yes
+
+  tasks:
+    - name: mkdirs
+      file:
+        path: '{{ item }}'
+        state: directory
+        owner: "root"
+        group: "githubactions"
+        mode: '0770'
+      loop:
+        - /srv/learning
+        - /srv/learning/nginx
+        - /srv/learning/postgres
+
+    - name: copy files nginx
+      template:
+        src: '../docker/nginx/{{ item }}'
+        dest: '/srv/learning/nginx'
+        mode: '0770'
+
+      loop:
+        - 'deploy-nginx.sh'
+        - 'nginx-docker-compose.yaml'
+    - name: copy files posgres
+      template:
+        src: '../docker/postgres/{{ item }}'
+        dest: '/srv/learning/postgres/'
+        owner: "root"
+        group: "githubactions"
+        mode: '0770'
+
+      loop:
+        - 'deploy-postgres.sh'
+        - 'postgres-docker-compose.yaml'
