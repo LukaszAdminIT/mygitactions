@@ -1,4 +1,4 @@
-name: run_apps
+name: run_apps_on_rocky
 
 on:
   workflow_dispatch:
