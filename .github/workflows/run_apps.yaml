@@ -18,15 +18,15 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 #
-      - name: Set up SSH key
-        run: |
-          echo "$HOME"
-          mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
-          chmod 600 $HOME/.ssh/githubactions
+#      - name: Set up SSH key
+#        run: |
+#          echo "$HOME"
+#          mkdir -p $HOME/.ssh
+#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+#          chmod 600 $HOME/.ssh/githubactions
 
       - name: Run nginx deploy script
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions_2 githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
 
       - name: Run postgres deploy script
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
