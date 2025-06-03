@@ -6,7 +6,7 @@ on:
       env_name:
         description: 'Environment name'
         required: true
-        default: 'staging'
+        default: 'rocky'
 
 jobs:
   deploy:
