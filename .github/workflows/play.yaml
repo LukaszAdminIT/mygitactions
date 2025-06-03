@@ -1,0 +1,34 @@
+# do przerobienia
+
+name: Master Controller
+
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: 'Który pipeline uruchomić?'
+        required: true
+        type: choice
+        options:
+          - test
+          - build
+          - deploy
+
+jobs:
+  test:
+    if: ${{ github.event.inputs.pipeline == 'test' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Uruchamiam testy..."
+
+  build:
+    if: ${{ github.event.inputs.pipeline == 'build' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Buduję aplikację..."
+
+  deploy:
+    if: ${{ github.event.inputs.pipeline == 'deploy' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Wdrażam aplikację..."

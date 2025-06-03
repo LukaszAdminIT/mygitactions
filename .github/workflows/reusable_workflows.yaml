@@ -6,10 +6,10 @@ on:
 
 jobs:
   debian-workflow:
-    uses: ./.github/workflows/run_apps_on_debian.yaml
+    uses: ./.github/workflows/run_apps.yaml
     with:
-      some-input: 'debian'
+      target-host: '10.250.2.24'
   rocky-workflow:
-    uses: ./.github/workflows/run_apps_on_rocky.yaml
+    uses: ./.github/workflows/run_apps.yaml
     with:
-      some-input: 'rocky'
+      target-host: '10.250.2.25'

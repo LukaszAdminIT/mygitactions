@@ -1,4 +1,4 @@
-name: run_apps_on_rocky
+name: run_apps_on_debian
 
 on:
   workflow_call:
@@ -6,6 +6,7 @@ on:
       target-host:
         required: true
         type: string
+
 
 jobs:
   deploy:
