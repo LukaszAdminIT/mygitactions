@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "${{ inputs.target-host }}"
           echo ${{ inputs.target-host }}
-#          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+          echo ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
 #
 #      - name: Run postgres deploy script
 #        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
