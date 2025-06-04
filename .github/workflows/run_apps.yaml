@@ -25,12 +25,11 @@ jobs:
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
-          printenv
-          echo "$PRV_KEY" > $HOME/.ssh/githubactions
-          TEST=$(<$HOME/.ssh/githubactions)
+          echo $HOME
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          ssh-add $HOME/.ssh/github_actions
+#          echo "$PRV_KEY" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
-          echo $TEST
-        
 
       - name: Run nginx deploy script
 
