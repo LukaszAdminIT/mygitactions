@@ -22,8 +22,9 @@ jobs:
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          echo ${{ secrets.SSH_PRIVATE_KEY }} > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
+          cat githubactions
         
 
       - name: Run nginx deploy script
@@ -31,7 +32,7 @@ jobs:
         run: |
           echo "${{ inputs.target-host }}"
           echo ${{ inputs.target-host }}
-          echo ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions_2 githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+          echo ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
 #
 #      - name: Run postgres deploy script
 #        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
