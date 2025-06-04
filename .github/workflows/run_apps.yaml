@@ -27,6 +27,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
+
       - name: Run nginx deploy script
 
         run: |

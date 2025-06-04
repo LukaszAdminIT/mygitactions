@@ -20,9 +20,13 @@ jobs:
     uses: ./.github/workflows/run_apps.yaml
     with:
       target-host: '10.250.2.24'
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
   rocky:
     if: ${{ github.event.inputs.pipeline == 'rocky' }}
     uses: ./.github/workflows/run_apps.yaml
     with:
       target-host: '10.250.2.25'
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
