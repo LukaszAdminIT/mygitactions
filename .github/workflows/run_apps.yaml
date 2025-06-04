@@ -23,7 +23,7 @@ jobs:
           echo "$HOME"
           mkdir -p $HOME/.ssh
           echo ${{ secrets.SSH_PRIVATE_KEY }} > $HOME/.ssh/githubactions
-          TEST=$(<githubactions)
+          TEST=$(<$HOME/.ssh/githubactions)
           chmod 600 $HOME/.ssh/githubactions
           echo $TEST
         
