@@ -6,7 +6,9 @@ on:
       target-host:
         required: true
         type: string
-
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
 
 jobs:
   deploy:
@@ -20,14 +22,10 @@ jobs:
 
       - name: Set up SSH key
         shell: bash
-#        env:
-#          PRV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
-          echo $HOME
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
-          ssh-add $HOME/.ssh/githubactions
 #          echo "$PRV_KEY" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
