@@ -20,8 +20,8 @@ jobs:
 
       - name: Set up SSH key
         shell: bash
-        env:
-          PRV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        env:
+#          PRV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
