@@ -27,7 +27,7 @@ jobs:
           mkdir -p $HOME/.ssh
           echo $HOME
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
-          ssh-add $HOME/.ssh/github_actions
+          ssh-add $HOME/.ssh/githubactions
 #          echo "$PRV_KEY" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
