@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
-          echo $PRV_KEY > $HOME/.ssh/githubactions
+          echo "$PRV_KEY" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
       - name: Run nginx deploy script
