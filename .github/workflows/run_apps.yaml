@@ -19,13 +19,14 @@ jobs:
         uses: actions/checkout@v4
 #
       - name: Set up SSH key
-#        env:
-#          PRV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        shell: bash
+        env:
+          PRV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "$HOME"
           mkdir -p $HOME/.ssh
           printenv
-          echo  "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          echo "$PRV_KEY" > $HOME/.ssh/githubactions
           TEST=$(<$HOME/.ssh/githubactions)
           chmod 600 $HOME/.ssh/githubactions
           echo $TEST
