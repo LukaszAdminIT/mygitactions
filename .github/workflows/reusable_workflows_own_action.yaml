@@ -16,7 +16,7 @@ on:
 jobs:
   docker-action:
     if: ${{ github.event.inputs.pipeline == 'docker-action' }}
-    uses: ./.github/workflows/own_action_docker
+    uses: ./.github/workflows/own_action_docker.yaml
     with:
       target-host: '10.250.2.24'
     secrets:
@@ -25,7 +25,7 @@ jobs:
 
   node-action:
     if: ${{ github.event.inputs.pipeline == 'node-action' }}
-    uses: ./.github/workflows/own_action_node
+    uses: ./.github/workflows/own_action_node.yaml
     with:
       target-host: '10.250.2.25'
     secrets:
