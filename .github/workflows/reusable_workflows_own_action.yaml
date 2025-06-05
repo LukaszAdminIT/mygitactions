@@ -1,5 +1,4 @@
-name: reusable_workflows
-
+name: Test mojej akcji
 
 on:
   workflow_dispatch:
@@ -9,23 +8,26 @@ on:
         required: true
         type: choice
         options:
-          - debian
-          - rocky
+          - docker-action
+          - node-action
+
 
 
 jobs:
-  debian:
-    if: ${{ github.event.inputs.pipeline == 'debian' }}
+  docker-action:
+    if: ${{ github.event.inputs.pipeline == 'docker-action' }}
     uses: ./.github/workflows/run_apps.yaml
     with:
       target-host: '10.250.2.24'
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-  rocky:
-    if: ${{ github.event.inputs.pipeline == 'rocky' }}
+
+  node-action:
+    if: ${{ github.event.inputs.pipeline == 'node-action' }}
     uses: ./.github/workflows/run_apps.yaml
     with:
       target-host: '10.250.2.25'
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+

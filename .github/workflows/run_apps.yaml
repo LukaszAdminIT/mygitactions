@@ -30,15 +30,12 @@ jobs:
           echo "$PRV_KEY" > $HOME/.ssh/githubactions
           chmod 600 $HOME/.ssh/githubactions
 
-
       - name: Run nginx deploy script
-
         run: |
           echo ${{ inputs.target-host }}
           ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
-#
-#      - name: Run postgres deploy script
-#        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
-#  #    - name: run nginx container
-#  #      run: ssh -o StrictHostKeyChecking=no githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+
+      - name: Run postgres deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
+
 

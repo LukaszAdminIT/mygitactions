@@ -1,0 +1,10 @@
+name: 'My Node.js Action'
+description: 'Przykładowa akcja napisana w Node.js'
+inputs:
+  name:
+    description: 'Imię użytkownika'
+    required: true
+    default: 'Świecie'
+runs:
+  using: 'node16'
+  main: 'index.js'

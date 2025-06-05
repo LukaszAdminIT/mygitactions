@@ -1,0 +1,10 @@
+name: 'My Docker Action'
+description: 'Przykładowa akcja w kontenerze Docker'
+inputs:
+  name:
+    description: 'Imię użytkownika'
+    required: true
+    default: 'Świecie'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

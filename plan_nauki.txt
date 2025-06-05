@@ -1,10 +1,3 @@
-- reusable workflows
-- jakie są możliwości stowrzenia podobnego pipelinu do tego w AMK - dokumentacja
-- łączenie się po ssh
-- kopiowanie plików na maszynę zdalną
-- utworzenie docker-compose a następnie postawienie kontenera na maszynie zdalnej
-
-
 
 Zadanie 7: Tworzenie własnej akcji
 Cel: Stworzenie własnej akcji w Node.js lub Dockerze.
@@ -12,14 +5,6 @@ Cel: Stworzenie własnej akcji w Node.js lub Dockerze.
 Opis: Zbuduj prostą akcję (np. sprawdzającą długość commit message) i użyj jej w workflow.
 
 Wskazówki: Stwórz folder action/, action.yml i dodaj do workflow uses: ./action.
-
-
-Zadanie 8: Deployment na zewnętrzny serwer
-Cel: Wdrożenie aplikacji na zewnętrzny serwer (np. VPS).
-
-Opis: Po udanych testach i merge’u do main, automatycznie wdrażaj aplikację via SSH.
-
-Wskazówki: Użyj appleboy/ssh-action i secrets do przechowywania kluczy.
 
 
 Zadanie 9: Monorepo – selektywne uruchamianie jobów
