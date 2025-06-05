@@ -1,3 +1,9 @@
+
+###### nie działa, problem z modułami '@actions/core' oraz '@actions/exec');
+
+
+
+
 name: node-action
 
 on:

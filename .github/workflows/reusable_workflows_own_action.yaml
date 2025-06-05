@@ -1,4 +1,4 @@
-name: Test mojej akcji
+name: Test mojej akcji - nie działa na node-action
 
 on:
   workflow_dispatch:

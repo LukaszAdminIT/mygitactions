@@ -1,0 +1,40 @@
+# Zadanie 9: Monorepo – selektywne uruchamianie jobów
+#Cel: W monorepo uruchamiaj job tylko dla zmienionej aplikacji.
+#
+#Opis: Jeśli zmieniono tylko app1/, uruchom tylko jej pipeline.
+#
+#Wskazówki: Skorzystaj z paths, if:, lub git diff w skryptach bash.
+
+
+name: Monorepo selective jobs
+
+on:
+  push:
+    paths:
+      - 'app1/**'
+      - 'app2/**'
+  pull_request:
+    paths:
+      - 'app1/**'
+      - 'app2/**'
+
+jobs:
+  app1:
+    if: ${{ contains(github.event.head_commit.message, '[monorepo-app1]') || github.event_name == 'pull_request' && contains(join(github.event.pull_request.changed_files.*.filename, ','), 'monorepo-app1/') }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run pipeline for app1
+        run: echo "Running app1 pipeline"
+
+  app2:
+    if: ${{ contains(github.event.head_commit.message, '[monorepo-app2]') || github.event_name == 'pull_request' && contains(join(github.event.pull_request.changed_files.*.filename, ','), 'monorepo-app2/') }}
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run pipeline for app2
+        run: echo "Running app2 pipeline"
