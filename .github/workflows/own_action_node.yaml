@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run custom commit message check
-        uses: ./action
+        uses: ./my-node-action
         with:
           min-length: 15
 
