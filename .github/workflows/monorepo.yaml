@@ -11,12 +11,12 @@ name: Monorepo selective jobs
 on:
   push:
     paths:
-      - 'app1/**'
-      - 'app2/**'
+      - 'monorepo-app1/**'
+      - 'monorepo-app2/**'
   pull_request:
     paths:
-      - 'app1/**'
-      - 'app2/**'
+      - 'monorepo-app1/**'
+      - 'monorepo-app2/**'
 
 jobs:
   app1:
