@@ -1,10 +1,10 @@
-name: 'My Node.js Action'
-description: 'Przykładowa akcja napisana w Node.js'
+name: 'Check Commit Message Length'
+description: 'Fails if the last commit message is too short'
 inputs:
-  name:
-    description: 'Imię użytkownika'
+  min-length:
+    description: 'Minimalna długość commit message'
     required: true
-    default: 'Świecie'
+    default: '10'
 runs:
   using: 'node16'
   main: 'index.js'

@@ -11,19 +11,14 @@ on:
         required: true
 
 jobs:
-  node:
+  check-message:
     runs-on: self-hosted
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: npm install
-        run: | 
-          sudo apt update
-          sudo apt install npm
-
-      - name: Uruchom moją akcję
-        uses: ./my-node-action  # albo ./my-docker-action
+      - name: Run custom commit message check
+        uses: ./action
         with:
-          name: Dzbanek
+          min-length: 15
 
