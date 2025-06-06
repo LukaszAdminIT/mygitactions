@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: print
         run: |
-          run: echo "deploy debian manually mutherfucker"
+          echo "deploy debian manually mutherfucker"
