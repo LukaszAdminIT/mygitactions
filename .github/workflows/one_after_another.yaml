@@ -1,11 +1,12 @@
 name: one_after_another.yaml
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
-      target-host:
+      env_name:
+        description: 'Environment name'
         required: true
-        type: string
+        default: 'staging'
 
 jobs:
   deploy_on_debian:
