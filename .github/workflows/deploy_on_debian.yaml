@@ -1,0 +1,15 @@
+name: deploy_debian
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["deploy rocky"]
+    types:
+      - completed
+jobs:
+  deploy_on_debian:
+    runs-on: self-hosted
+    steps:
+      - name: print
+        run: |
+          run: echo "deploy debian manually mutherfucker"

@@ -1,0 +1,13 @@
+name: main_pipeline
+
+
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:

@@ -1,0 +1,15 @@
+name: deploy rocky
+
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_on_rocky:
+    runs-on: self-hosted
+    steps:
+      - name: print
+        run: |
+          echo "deploy rocky mutherfucker"

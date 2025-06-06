@@ -21,3 +21,10 @@ Cel: Generowanie macierzy buildów dynamicznie na podstawie pliku JSON.
 Opis: Wygeneruj plik matrix.json w jednym jobie, użyj go w drugim.
 
 Wskazówki: Skorzystaj z outputs, fromJSON() i workflow_run lub job outputs.
+
+
+
+
+
+utworzyć oddzielne workflow dla kazdego z jobów
+wywołać drugi worflow manualnie
