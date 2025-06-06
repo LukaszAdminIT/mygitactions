@@ -1,4 +1,4 @@
-name: run_apps_on_rocky
+name: one_after_another.yaml
 
 on:
   workflow_call:
@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  deploy:
+  deploy_on_debian:
     runs-on: self-hosted
 #    container:
 #      image: node:18
@@ -31,5 +31,30 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@{{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
   #    - name: run nginx container
   #      run: ssh -o StrictHostKeyChecking=no githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+      - name: Cleanup SSH key
+        run: rm -f $HOME/.ssh/githubactions
+
+  deploy_on_rocky:
+    runs-on: self-hosted
+    needs: deploy_on_debian
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        run: |
+          echo "$HOME"
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
+
+      - name: Run nginx deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
+
+      - name: Run postgres deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@{{ inputs.target-host }} "bash /srv/learning/postgres/deploy-postgres.sh "
+      #    - name: run nginx container
+      #      run: ssh -o StrictHostKeyChecking=no githubactions@{{ inputs.target-host }} "bash /srv/learning/nginx/deploy-nginx.sh"
       - name: Cleanup SSH key
         run: rm -f $HOME/.ssh/githubactions
