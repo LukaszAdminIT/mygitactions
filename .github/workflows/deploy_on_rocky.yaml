@@ -1,4 +1,4 @@
-name: deploy rocky
+name: first on push main
 
 
 on:

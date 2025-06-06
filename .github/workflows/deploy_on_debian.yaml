@@ -1,4 +1,4 @@
-name: deploy_debian
+name: second workflow after first
 
 on:
   workflow_dispatch:
@@ -9,6 +9,8 @@ on:
 jobs:
   deploy_on_debian:
     runs-on: self-hosted
+#    runs-on: [self-hosted, debian]
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: print
         run: |
