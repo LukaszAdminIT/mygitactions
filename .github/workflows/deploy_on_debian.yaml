@@ -3,7 +3,7 @@ name: second workflow after first
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["deploy rocky"]
+    workflows: ["first on push main"]
     types:
       - completed
 jobs:
