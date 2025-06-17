@@ -1,0 +1,13 @@
+name: multiple jobs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_job:
+    runs-on: self-hosted
+    steps:
+      - name: read file
+        run: cat dragon.txt
+      - name: deploy
+        run: echo Deploying ...
