@@ -1,7 +1,7 @@
 name: multiple jobs
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   deploy_job:

@@ -2,7 +2,8 @@ name: multiple jobs
 
 on: push
 
-jobs: 
+jobs:
+
   build_job:
     runs-on: self-hosted
     steps:
@@ -15,14 +16,11 @@ jobs:
     needs: build_job
     runs-on: self-hosted
     steps:
-    - name: sleep for 10 seconds
-      run: sleep 10
     - name: test file exists
       run: grep -i "dragon" dragon.txt
 
   deploy_job:
-    runs-on: self-hosted
-    needs: test_job
-    steps:
-     - name: third job
-       run: echo "third job"
+    uses: ./.github/workflows/manualy_run_thid_job.yaml
+    needs: [test_job,build_job]
+    with:
+      deploy_env: production
