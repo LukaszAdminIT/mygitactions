@@ -2,10 +2,14 @@ name: third job manually
 
 on:
   workflow_call:
-
+    inputs:
+      deploy_env:
+        required: true
+        type: string
 jobs:
   deploy_job:
     runs-on: self-hosted
+    environment: ${{ inputs.deploy_env }}
     steps:
       - name: read file
         run: cat dragon.txt
