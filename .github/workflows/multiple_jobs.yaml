@@ -1,6 +1,7 @@
-name: third job manually
+name: multiple jobs
 
-on: push
+on:
+  push:
 
 jobs:
 
