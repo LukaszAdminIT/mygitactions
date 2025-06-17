@@ -5,23 +5,34 @@ on:
 
 jobs:
 
-  build_job:
+  get_permissions_job:
     runs-on: self-hosted
     steps:
-    - name: install cowsay program
-      run: sudo apt-get install cowsay -y
-    - name: execute cowsay cmd
-      run: cowsay -f dragon "Run for cover, I am a DRAGON .... RAWR" >> dragon.txt
+      - name: Set up SSH key
+        run: |
+          echo "$HOME"
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
+      - name: get project folders permissions
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/
+      - name: get files permissions nginx
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/nginx/
+      - name: get files permissions postgres
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/postgres
 
   test_job:
+    uses: ./.github/workflows/manualy_run_thid_job.yaml
     needs: build_job
-    runs-on: self-hosted
-    steps:
-    - name: test file exists
-      run: grep -i "dragon" dragon.txt
+    with:
+      deploy_env: develop
+
 
   deploy_job:
     uses: ./.github/workflows/manualy_run_thid_job.yaml
     needs: [test_job,build_job]
     with:
       deploy_env: production
+
+
+

@@ -1,4 +1,4 @@
-name: third job manually
+name: deploy to prod
 
 on:
   workflow_call:
@@ -11,7 +11,5 @@ jobs:
     runs-on: self-hosted
     environment: ${{ inputs.deploy_env }}
     steps:
-      - name: read file
-        run: cat dragon.txt
-      - name: deploy
-        run: echo Deploying ...
+      - name: Run postgres deploy script
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash /srv/learning/postgres/deploy-postgres.sh "

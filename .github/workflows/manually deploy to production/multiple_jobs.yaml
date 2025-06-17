@@ -1,0 +1,27 @@
+name: multiple jobs
+
+on:
+  push:
+
+jobs:
+
+  build_job:
+    runs-on: self-hosted
+    steps:
+    - name: install cowsay program
+      run: sudo apt-get install cowsay -y
+    - name: execute cowsay cmd
+      run: cowsay -f dragon "Run for cover, I am a DRAGON .... RAWR" >> dragon.txt
+
+  test_job:
+    needs: build_job
+    runs-on: self-hosted
+    steps:
+    - name: test file exists
+      run: grep -i "dragon" dragon.txt
+
+  deploy_job:
+    uses: ./.github/workflows/manualy_run_thid_job.yaml
+    needs: [test_job,build_job]
+    with:
+      deploy_env: production
