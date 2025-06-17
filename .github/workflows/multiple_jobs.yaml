@@ -9,9 +9,8 @@ jobs:
     - name: install cowsay program
       run: sudo apt-get install cowsay -y
     - name: execute cowsay cmd
-      run: cowsay -f dragon "Run for cover, I am a DRAGON .... RAWR" ?? dragon.txt
-    - name: sleep for 30 seconds
-      run: sleep 30
+      run: cowsay -f dragon "Run for cover, I am a DRAGON .... RAWR" >> dragon.txt
+
   test_job:
     needs: build_job
     runs-on: self-hosted
