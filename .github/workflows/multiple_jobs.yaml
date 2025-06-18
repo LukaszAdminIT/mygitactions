@@ -16,9 +16,12 @@ jobs:
         with:
           RUN_NAME: "manual-step"
   step-awaiting-manual-trigger:
+    runs-on: self-hosted
     needs: check_permisionssion
     if: ${{ needs.manual-step-name.outputs.CONTINUE_JOBS == 'true' }}
-    uses: ./.github/workflows/change_permissions.yaml
+    steps:
+      - name: run check permisions
+        uses: ./.github/workflows/check_permissions.yaml
 
 
 
