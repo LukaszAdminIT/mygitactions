@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: manual-trigger
         id: manual-trigger
-        uses: benhamiltonpro/manual-trigger@v1
+        uses: benhamiltonpro/manual-trigger@v1.0.2
         with:
           RUN_NAME: "manual-step"
   step-awaiting-manual-trigger:
