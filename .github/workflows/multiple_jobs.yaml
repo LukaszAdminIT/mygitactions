@@ -5,22 +5,22 @@ on:
 
 jobs:
 
-  check_permisionssion:
+  check_permissions:
     runs-on: self-hosted
     outputs:
       CONTINUE_JOBS: ${{ steps.manual-trigger.outputs.CONTINUE_JOBS }}
     steps:
       - name: manual-trigger
         id: manual-trigger
-        uses: benhamiltonpro/manual-trigger@v1.0.2
+        uses: benhamiltonpro/manual-trigger@v1.0.3
         with:
           RUN_NAME: "manual-step"
   step-awaiting-manual-trigger:
     runs-on: self-hosted
-    needs: check_permisionssion
+    needs: check_permissions
     if: ${{ needs.manual-step-name.outputs.CONTINUE_JOBS == 'true' }}
     steps:
-      - name: run check permisions
+      - name: run check permissions
         uses: ./.github/workflows/check_permissions.yaml
 
 
