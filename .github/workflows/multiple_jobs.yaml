@@ -1,33 +1,32 @@
 name: multiple jobs
 
 on:
-  workflow_dispatch:
-    inputs:
-      trigger_downstream:
-        description: 'Trigger downstream deployments'
-        required: true
-        type: boolean
-        default: false
+  push:
 
 jobs:
 
   check_permisionssion:
     runs-on: self-hosted
+    outputs:
+      CONTINUE_JOBS: ${{ steps.manual-trigger.outputs.CONTINUE_JOBS }}
     steps:
-      - uses: trstringer/manual-approval@v1
+      - name: manual-trigger
+        id: manual-trigger
+        uses: benhamiltonpro/manual-trigger@v1
         with:
-          secret: ${{ github.TOKEN }}
-          approvers: LukaszAdminIT
-          minimum-approvals: 1
-          issue-title: "Deploying nginx on debian"
-          issue-body: "Please approve deploy."
-          exclude-workflow-initiator-as-approver: false
-          fail-on-denial: true
-          additional-approved-words: ''
-          additional-denied-words: ''
-      - name: first_workflow_debian_postgres
-        uses: ./.github/workflows/change_permissions.yaml
+          RUN_NAME: "manual-step"
+  step-awaiting-manual-trigger:
+    needs: check_permisionssion
+    if: ${{ needs.manual-step-name.outputs.CONTINUE_JOBS == 'true' }}
+    uses: ./.github/workflows/change_permissions.yaml
 
+
+
+
+#      - name: first_workflow_debian_postgres
+#        uses: ./.github/workflows/change_permissions.yaml
+#        with:
+#          RUN_NAME: "manual-step"
 
 
 #    name: Verify Deployment Permissions
