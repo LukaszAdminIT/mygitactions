@@ -2,37 +2,63 @@ name: multiple jobs
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      trigger_downstream:
+        type: boolean
+        description: 'Trigger downstream pipeline?'
+        required: false
+        default: false
 
 jobs:
-
-  get_permissions_job:
+  check_permisionssion:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
     runs-on: self-hosted
     steps:
-      - name: Set up SSH key
-        run: |
-          echo "$HOME"
-          mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
-          chmod 600 $HOME/.ssh/githubactions
-      - name: get project folders permissions
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/"
-      - name: get files permissions nginx
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/nginx/"
-      - name: get files permissions postgres
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "ls -la /srv/learning/postgres"
+      - name: first_workflow_debian_postgres
+        uses: ./.github/workflows/check_permissions.yaml
 
-  deploy_to_dev_job:
-    uses: ./.github/workflows/deploy_to_dev.yaml
-    needs: get_permissions_job
-    with:
-      deploy_env: develop
+  change_permisionssion:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
+    runs-on: self-hosted
+    steps:
+      - name: first_workflow_debian_postgres
+        uses: ./.github/workflows/change_permissions.yaml
+
+  deploy_postgres_debian:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
+    runs-on: self-hosted
+    steps:
+      - name: first_workflow_debian_postgres
+        uses: ./.github/workflows/first_workflow_debian_postgres.yaml
+
+#        with:
+#          repository: owner/downstream_repository
+#          client-payload: '{"branch": "main"}'
+  deploy_nginx_debian:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
+    runs-on: self-hosted
+    steps:
+      - name: first_workflow_debian_postgres
+        uses: ./.github/workflows/second_workflow_neginx_debian.yaml
 
 
-  deploy_to_prod_job:
-    uses: ./.github/workflows/manualy_run_thid_job.yaml
-    needs: [deploy_to_dev_job,get_permissions_job]
-    with:
-      deploy_env: production
+  deploy_nginx_rocky:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
+    runs-on: self-hosted
+    steps:
+      - name: deploy_nginx_rocky
+        uses: ./.github/workflows/third_workflow_neginx_rocky.yaml
 
 
+  deploy_postgres_rocky:
+    if: ${{ github.event.inputs.trigger_downstream == 'true' }}
+    runs-on: self-hosted
+    steps:
+      - name: deploy_nginx_rocky
+        uses: ./.github/workflows/fourth_workflow_postgres_rocky.yaml
 
+# first_workflow_debian_postgres.yaml
+# second_workflow_neginx_debian.yaml
+# third_workflow_neginx_rocky.yaml
+# fourth_workflow_postgres_rocky.yaml

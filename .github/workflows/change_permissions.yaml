@@ -1,0 +1,21 @@
+on:
+  workflow_call:
+    inputs:
+      deploy_env:
+        required: true
+        type: string
+
+
+
+jobs:
+  change_permissions:
+    runs-on: self-hosted
+    steps:
+      - name: Set up SSH key
+        run: |
+          echo "$HOME"
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
+      - name: get project folders permissions
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "chmod 770 /srv/learning/t
