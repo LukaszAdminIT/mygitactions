@@ -2,7 +2,7 @@ name: Test Project
 on: push
 jobs:
   test:
-    runs-on: self_hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v4
