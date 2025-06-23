@@ -7,10 +7,17 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: install node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
       - name: install dependencies
-        run: npm ci
+        run: |
+           if [ -e yarn.lock ]; then
+           yarn install --frozen-lockfile
+           elif [ -e package-lock.json ]; then
+           npm ci
+           else
+           npm i
+           fi
       - name: Run Tests
         run: npm test
