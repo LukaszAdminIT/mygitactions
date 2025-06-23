@@ -1,0 +1,16 @@
+name: Test Project
+on: push
+jobs:
+  test:
+    runs-on: self_hosted
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: install node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: install dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm test
