@@ -4,26 +4,30 @@ on:
 #    branches:
 #      - learning
 jobs:
-  get_code:
+  lint:
     runs-on: self-hosted
     steps:
-      - name: get code
+      - name: get code for lint
         uses: actions/checkout@v4
-  lint_and_test:
-    runs-on: self-hosted
-    needs: get_code
-    steps:
-      - name: install lint
-        run: npm init @eslint/config@latest
       - name: install dependencies
         run: npm ci
       - name: lint
         run: npm run lint
+  test:
+    runs-on: self-hosted
+    needs: lint
+    steps:
+      - name: get code for test
+        uses: actions/checkout@v4
+      - name: install dependencies
+        run: npm ci
       - name: test
         run: npm run test
   deploy:
     runs-on: self-hosted
-    needs: lint_and_test
+    needs: test
     steps:
+      - name: get code for build
+        uses: actions/checkout@v4
       - name: deploy
         run: npm run build
