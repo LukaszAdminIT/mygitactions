@@ -29,5 +29,10 @@ jobs:
     steps:
       - name: get code for build
         uses: actions/checkout@v4
-      - name: deploy
+      - name: install dependencies
+        run: npm ci
+      - name: build
         run: npm run build
+      - name: deploy
+        run: echo "deploying"
+
