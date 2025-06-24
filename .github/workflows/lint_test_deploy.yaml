@@ -16,6 +16,8 @@ jobs:
   build:
     runs-on: self-hosted
     needs: lint
+    outputs:
+      script-file: ${{ steps.publish.script-file }}
     steps:
       - name: get code for test
         uses: actions/checkout@v4
@@ -25,6 +27,9 @@ jobs:
         run: npm run test
       - name: build
         run: npm run build
+      - name: Publish JS filename
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT';'
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -42,6 +47,8 @@ jobs:
           name: dist-files
       - name: Output contents
         run: ls
+      - name: output filename
+        run: echo "$ {{ needs.build.outputs.skript-file  }}"
       - name: deploy
         run: echo "deploy"
 
