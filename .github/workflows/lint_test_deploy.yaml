@@ -4,12 +4,12 @@ on:
 #    branches:
 #      - learning
 jobs:
-  lint:
+  get_code:
     runs-on: self-hosted
     steps:
       - name: get code
         uses: actions/checkout@v4
-  test:
+  lint_and_test:
     runs-on: self-hosted
     needs: lint
     steps:
