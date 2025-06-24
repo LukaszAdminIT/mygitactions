@@ -11,12 +11,10 @@ jobs:
         uses: actions/checkout@v4
   lint_and_test:
     runs-on: self-hosted
-    needs: lint
+    needs: get_code
     steps:
-      - name: install node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+      - name: install lint
+        run: npm init @eslint/config@latest
       - name: install dependencies
         run: npm ci
       - name: lint
