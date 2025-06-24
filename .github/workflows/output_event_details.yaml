@@ -1,7 +1,9 @@
 name: output metadata
-on:
-  push:
+on: issues
 
 jobs:
-  runs-on: self-hosted
-  steps:
+  otput-info:
+    runs-on: self-hosted
+    steps:
+      - name: Output event details
+        run: echo "${{ toJSON(github) }}"
