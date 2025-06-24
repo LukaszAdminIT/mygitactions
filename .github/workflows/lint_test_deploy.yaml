@@ -1,0 +1,28 @@
+name: lint test and deploy
+on:
+  push:
+
+jobs:
+  lint:
+    runs-on: self-hosted
+    steps:
+      - name: lint
+        uses: actions/checkout@v4
+  test:
+    runs-on: self-hosted
+    needs: lint
+    steps:
+      - name: install node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: install dependencies
+        run: npm ci
+      - name: test
+        run: npm test
+  deploy:
+    runs-on: self-hosted
+    needs: test
+    steps:
+      - name: deploy
+        run: echo "deploying app on host"
