@@ -5,6 +5,8 @@ on:
 #      - learning
 env:
   # USER and PASSWORD in secrets in github
+  POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+  POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
   POSTGRES_DB: mydatabase
   PORT: 5432
 jobs:
