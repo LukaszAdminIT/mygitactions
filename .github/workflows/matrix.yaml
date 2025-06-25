@@ -9,7 +9,7 @@ jobs:
         node-version: [14, 16, 18]
         operating-system: [ubuntu-latest, windows-latest]
         include:  # additional standalone configuration
-          - node-version: 18
+          - node-version: 12
             operating-system: ubuntu-latest
             npm: 6
         exclude:
