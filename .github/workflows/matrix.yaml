@@ -8,6 +8,13 @@ jobs:
       matrix:
         node-version: [14, 16, 18]
         operating-system: [ubuntu-latest, windows-latest]
+        include:  # additional standalone configuration
+          - node-version: 18
+            operating-system: ubuntu-latest
+            npm: 6
+        exclude:
+          - node-version: 14
+            operating-system: windows-latest
     runs-on: ${{ matrix.operating-system}}
     steps:
       - name: Get Code
