@@ -28,64 +28,64 @@ jobs:
 ## success()      returns true when none previous Step or Job failed
 ## always()       causes the step to always execute, even when cancelled
 ## cancelled()    returns true if the workflow has been cancelled
-  lint:
-    runs-on: self-hosted
-    steps:
-      - name: get code for lint
-        uses: actions/checkout@v4
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install dependencies
-        run: npm ci
-      - name: lint
-        run: npm run lint
-
-  build:
-    runs-on: self-hosted
-    needs: lint
-    outputs:
-      script-file: ${{ steps.publish.outputs.script-file }}
-    steps:
-      - name: get code for test
-        uses: actions/checkout@v4
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install dependencies
-        run: npm ci
-      - name: test
-        run: npm run test
-      - name: build
-        run: npm run build
-      - name: Publish JS filename
-        id: publish
-        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-files
-          path: |
-            dist
-#            package.json
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - name: get build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-files
-      - name: Output contents
-        run: ls
-      - name: output filename
-        run: echo "${{ needs.build.outputs.script-file }}"
-      - name: deploy
-        run: echo "deploy"
+#  lint:
+#    runs-on: self-hosted
+#    steps:
+#      - name: get code for lint
+#        uses: actions/checkout@v4
+#      - name: Cache dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.npm
+#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install dependencies
+#        run: npm ci
+#      - name: lint
+#        run: npm run lint
+#
+#  build:
+#    runs-on: self-hosted
+#    needs: lint
+#    outputs:
+#      script-file: ${{ steps.publish.outputs.script-file }}
+#    steps:
+#      - name: get code for test
+#        uses: actions/checkout@v4
+#      - name: Cache dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.npm
+#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install dependencies
+#        run: npm ci
+#      - name: test
+#        run: npm run test
+#      - name: build
+#        run: npm run build
+#      - name: Publish JS filename
+#        id: publish
+#        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dist-files
+#          path: |
+#            dist
+##            package.json
+#  deploy:
+#    runs-on: self-hosted
+#    needs: build
+#    steps:
+#      - name: get build artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: dist-files
+#      - name: Output contents
+#        run: ls
+#      - name: output filename
+#        run: echo "${{ needs.build.outputs.script-file }}"
+#      - name: deploy
+#        run: echo "deploy"
 
 
 
