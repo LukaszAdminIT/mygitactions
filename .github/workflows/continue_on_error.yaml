@@ -66,6 +66,9 @@ jobs:
     outputs:
       script-file: ${{ steps.publish.outputs.script-file }}
     steps:
+      - name: test_if list users_if_failed
+        continue-on-error: true
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
       - name: get code for test
         uses: actions/checkout@v4
       - name: Cache dependencies
