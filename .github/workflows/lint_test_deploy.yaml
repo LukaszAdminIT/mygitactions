@@ -20,7 +20,7 @@ jobs:
         run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}" # działa i tak (dostęp do zmiennych w całym środowisku we wszystkich plikach )
       - name: create postgres user
         id: test-if  # needed for "if" in next step
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER user3 WITH ENCRYPTED PASSWORD 'password2';\""
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER bla WITH ENCRYPTED PASSWORD 'password2';\""
       - name: test_if list users
         if: failure() && steps.test-if.outcome == 'failure'         # https://docs.github.com/en/actions/reference/accessing-contextual-information-about-workflow-runs#steps-context
 #        if: ${{ failure() && steps.test-if.outcome == 'failure' }}
