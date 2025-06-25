@@ -21,10 +21,24 @@ jobs:
       - name: create postgres user
         id: test-if  # needed for "if" in next step
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER bla WITH ENCRYPTED PASSWORD 'password2';\""
-      - name: test_if list users
+      - name: test_if list users_if_failed
         if: failure() && steps.test-if.outcome == 'failure'         # https://docs.github.com/en/actions/reference/accessing-contextual-information-about-workflow-runs#steps-context
 #        if: ${{ failure() && steps.test-if.outcome == 'failure' }}
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
+      - name: test_if list users_if_success # run if success
+        if: success() && steps.test-if.outcome == 'success'
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
+  raport:
+    needs: [db_test]
+    if: failure()
+    runs-on: self-hosted
+    steps:
+      - name: Output information
+        run: |
+          ech "something went wrong"
+          echo "${{ github }}"
+
+
 ## if
 ## failure()      returns true when any previous Step or Job failed
 ## success()      returns true when none previous Step or Job failed
