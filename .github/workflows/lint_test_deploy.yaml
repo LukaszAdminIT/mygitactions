@@ -12,7 +12,7 @@ env:
 jobs:
   db_test:
     environment: develop # need to create environment and environment secrets, will use those secrets from environment secrets not general secrets
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: print env strait
         run: echo "POSTGRES_USER=$POSTGRES_USER" # działa i tak (dostęp do zmiennej tylko w tym pliku w tym jobie)
@@ -31,7 +31,7 @@ jobs:
   raport:
     needs: [db_test,deploy]
     if: failure()
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Output information
         run: |
@@ -45,7 +45,7 @@ jobs:
 ## always()       causes the step to always execute, even when cancelled
 ## cancelled()    returns true if the workflow has been cancelled
   lint:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: get code for lint
         uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
         run: npm run lint
 
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: lint
     outputs:
       script-file: ${{ steps.publish.outputs.script-file }}
@@ -89,7 +89,7 @@ jobs:
             dist
 #            package.json
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - name: get build artifacts
