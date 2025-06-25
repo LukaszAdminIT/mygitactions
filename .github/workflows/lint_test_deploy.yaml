@@ -13,11 +13,11 @@ jobs:
       PORT: 5432
     steps:
       - name: print env strait
-        run: echo "POSTGRES_USER=$POSTGRES_USER"
+        run: echo "POSTGRES_USER=$POSTGRES_USER" # działa i tak
       - name: print env.abc
-        run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}"
+        run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}" # działa i tak
       - name: connect to debian
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash docker exec -it f419b8e43f98 bash"
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions -t githubactions@10.250.2.24 "docker exec -it f419b8e43f98 /bin/bash"
       - name: connect to postgres
         run: psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}}
       - name: create user
