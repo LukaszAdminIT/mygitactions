@@ -29,7 +29,7 @@ jobs:
         if: success() && steps.test-if.outcome == 'success'
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
   raport:
-    needs: [lint,deploy]
+    needs: [db_test,deploy]
     if: failure()
     runs-on: ubuntu-latest
     steps:
