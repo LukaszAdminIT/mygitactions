@@ -91,7 +91,7 @@ jobs:
           name: dist-files
           path: |
             dist
-#            package.json
+
   deploy:
     runs-on: self-hosted
     needs: build
