@@ -4,63 +4,81 @@ on:
 #    branches:
 #      - learning
 jobs:
-  lint:
+  db_test:
     runs-on: self-hosted
+    env:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+      PORT: 5432
     steps:
-      - name: get code for lint
-        uses: actions/checkout@v4
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install dependencies
-        run: npm ci
-      - name: lint
-        run: npm run lint
-  build:
-    runs-on: self-hosted
-    needs: lint
-    outputs:
-      script-file: ${{ steps.publish.outputs.script-file }}
-    steps:
-      - name: get code for test
-        uses: actions/checkout@v4
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: install dependencies
-        run: npm ci
-      - name: test
-        run: npm run test
-      - name: build
-        run: npm run build
-      - name: Publish JS filename
-        id: publish
-        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-files
-          path: |
-            dist
-#            package.json
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - name: get build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-files
-      - name: Output contents
-        run: ls
-      - name: output filename
-        run: echo "${{ needs.build.outputs.script-file }}"
-      - name: deploy
-        run: echo "deploy"
+      - name: print env strait
+        run: echo "POSTGRES_USER=$POSTGRES_USER"
+      - name: print env.abc
+        run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}"
+      - name: connect to debian
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 "bash exec -it f419b8e43f98"
+      - name: connect to postgres
+        run: psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}}
+      - name: create user
+        run: echo "CREATE USER user2 WITH ENCRYPTED PASSWORD 'password2';"
+#  lint:
+#    runs-on: self-hosted
+#    steps:
+#      - name: get code for lint
+#        uses: actions/checkout@v4
+#      - name: Cache dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.npm
+#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install dependencies
+#        run: npm ci
+#      - name: lint
+#        run: npm run lint
+#  build:
+#    runs-on: self-hosted
+#    needs: lint
+#    outputs:
+#      script-file: ${{ steps.publish.outputs.script-file }}
+#    steps:
+#      - name: get code for test
+#        uses: actions/checkout@v4
+#      - name: Cache dependencies
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.npm
+#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+#      - name: install dependencies
+#        run: npm ci
+#      - name: test
+#        run: npm run test
+#      - name: build
+#        run: npm run build
+#      - name: Publish JS filename
+#        id: publish
+#        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+#      - name: Upload artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dist-files
+#          path: |
+#            dist
+##            package.json
+#  deploy:
+#    runs-on: self-hosted
+#    needs: build
+#    steps:
+#      - name: get build artifacts
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: dist-files
+#      - name: Output contents
+#        run: ls
+#      - name: output filename
+#        run: echo "${{ needs.build.outputs.script-file }}"
+#      - name: deploy
+#        run: echo "deploy"
 
 
 
