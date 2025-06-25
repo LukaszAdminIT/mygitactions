@@ -18,7 +18,8 @@ jobs:
         run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}" # działa i tak
       - name: create postgres user
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER user2 WITH ENCRYPTED PASSWORD 'password2';\""
-
+      - name: list users
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
 #  lint:
 #    runs-on: self-hosted
 #    steps:
