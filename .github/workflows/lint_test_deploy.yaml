@@ -50,11 +50,13 @@ jobs:
       - name: get code for lint
         uses: actions/checkout@v4
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: lint
         run: npm run lint
@@ -68,11 +70,13 @@ jobs:
       - name: get code for test
         uses: actions/checkout@v4
       - name: Cache dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: test
         run: npm run test
