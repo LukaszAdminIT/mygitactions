@@ -1,8 +1,8 @@
 name: lint test and deploy
 on:
   push:
-#    branches:
-#      - learning
+    branches:
+      - learning
 env:
   # USER and PASSWORD in secrets in github
   POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
