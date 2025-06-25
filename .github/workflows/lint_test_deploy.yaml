@@ -29,14 +29,14 @@ jobs:
         if: success() && steps.test-if.outcome == 'success'
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
   raport:
-    needs: [db_test,deploy]
+    needs: [lint,deploy]
     if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: Output information
         run: |
-          ech "something went wrong"
-          echo "${{ github }}"
+          echo "something went wrong"
+          echo "${{ toJSON(github) }}"
 
 
 ## if
