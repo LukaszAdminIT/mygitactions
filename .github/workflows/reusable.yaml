@@ -10,15 +10,25 @@ on:
     secrets:
       some_secret:
         required: true
+    outputs:
+      result:
+        description: The result of the deployament operation
+        value: ${{ jobs.deploy.outputs.outcome }}
 jobs:
- deploy:
-   runs-on: self-hosted
-   steps:
-     - name: Get code
-       uses: actions/download-artifact@v4
-       with:
-         name: ${{ inputs.artifact-name }}
-     - name: List files
-       run: ls
-     - name: Output information
-       run: echo "Deploying & uploading"
+  deploy:
+    outputs:
+      outcome: ${{ steps.set-result.otputs.step-result }}
+    runs-on: self-hosted
+    steps:
+      - name: Get code
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+      - name: List files
+        run: ls
+      - name: Output information
+        run: echo "Deploying & uploading"
+      - name: Output information
+        run: echo "Deploying & uploading..."
+      - name: Set result output
+        run: echo "::set-output name=step-result::success"

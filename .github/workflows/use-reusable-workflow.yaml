@@ -93,11 +93,16 @@ jobs:
             dist
 
   deploy:
-      needs: build
-      uses: ./.github/workflows/reusable.yaml
-      with:
-        artifact-name: dist-files
-      secrets:
-        some_secret: ${{ secrets.some_secret }}
-
+    needs: build
+    uses: ./.github/workflows/reusable.yaml
+    with:
+      artifact-name: dist-files
+    secrets:
+      some_secret: ${{ secrets.some_secret }}
+  print-deploy-result:
+    runs-on: self-hosted
+    needs: deploy
+    steps:
+      - name: print deploy output
+        run: echo "${{ needs.deplou.outputs.result}}"
 
