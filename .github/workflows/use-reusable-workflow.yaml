@@ -94,7 +94,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted
-    needs: build
+#    needs: build
     steps:
       - name: get build artifacts
         uses: ./.github/workflows/reusable.yaml
