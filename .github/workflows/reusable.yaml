@@ -7,10 +7,10 @@ on:
         required: false
         default: dist
         type: string
-      secrets:
-        some_secret:
-          required: true
-          type: string
+    secrets:
+      some_secret:
+        required: true
+        type: string
 jobs:
   deploy:
     runs-on: self-hosted
