@@ -97,5 +97,7 @@ jobs:
       uses: ./.github/workflows/reusable.yaml
       with:
         artifact-name: dist-files
+      secrets:
+        some-secret: ${{ secrets.some_secret }}
 
 
