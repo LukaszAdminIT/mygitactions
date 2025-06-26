@@ -97,6 +97,6 @@ jobs:
 #    needs: build
     steps:
       - name: get build artifacts
-        uses: ./.github/workflows/reusable.yaml
+        uses: ./.github/workflows/reusable.yml
 
 
