@@ -98,6 +98,6 @@ jobs:
       with:
         artifact-name: dist-files
       secrets:
-        some-secret: ${{ secrets.some_secret }}
+        some_secret: ${{ secrets.some_secret }}
 
 
