@@ -93,7 +93,7 @@ jobs:
 #            dist
 
   deploy:
-      uses: ./.github/workflows/reusable.yml
+      uses: ./.github/workflows/reusable.yaml
       with:
         artifact-name: dist-files
 
