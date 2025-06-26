@@ -3,7 +3,6 @@ on:
   push:
 #    branches:
 #      - learning
-
 jobs:
   db_test:
     environment: develop # need to create environment and environment secrets, will use those secrets from environment secrets not general secrets
