@@ -10,87 +10,87 @@ env:
   POSTGRES_DB: mydatabase
   PORT: 5432
 jobs:
-#  db_test:
-#    environment: develop # need to create environment and environment secrets, will use those secrets from environment secrets not general secrets
-#    runs-on: self-hosted
-#    steps:
-#      - name: print env strait
-#        run: echo "POSTGRES_USER=$POSTGRES_USER" # działa i tak (dostęp do zmiennej tylko w tym pliku w tym jobie)
-#      - name: print env.abc
-#        run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}" # działa i tak (dostęp do zmiennych w całym środowisku we wszystkich plikach )
-#      - name: create postgres user
-#        id: test-if  # needed for "if" in next step
-#        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER bla2 WITH ENCRYPTED PASSWORD 'password2';\""
-#      - name: test_if list users_if_failed
-#        if: failure() && steps.test-if.outcome == 'failure'         # https://docs.github.com/en/actions/reference/accessing-contextual-information-about-workflow-runs#steps-context
-#        #        if: ${{ failure() && steps.test-if.outcome == 'failure' }}
-#        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
-#      - name: test_if list users_if_success # run if success
-#        if: success() && steps.test-if.outcome == 'success'
-#        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
-#  raport:
-#    needs: [db_test,deploy]
-#    if: failure()
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Output information
-#        run: |
-#          echo "something went wrong"
-#          echo "${{ toJSON(github) }}"
-#
-#
-#  ## if
-#  ## failure()      returns true when any previous Step or Job failed
-#  ## success()      returns true when none previous Step or Job failed
-#  ## always()       causes the step to always execute, even when cancelled
-#  ## cancelled()    returns true if the workflow has been cancelled
-#  lint:
-#    runs-on: self-hosted
-#    steps:
-#      - name: get code for lint
-#        uses: actions/checkout@v4
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v4
-#        with:
-#          path: node_modules
-#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-#      - name: install dependencies
-#        if: steps.cache.outputs.cache-hit != 'true'
-#        run: npm ci
-#      - name: lint
-#        run: npm run lint
-#
-#  build:
-#    runs-on: self-hosted
-#    needs: lint
-#    outputs:
-#      script-file: ${{ steps.publish.outputs.script-file }}
-#    steps:
-#      - name: get code for test
-#        uses: actions/checkout@v4
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v4
-#        with:
-#          path: node_modules
-#          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
-#      - name: install dependencies
-#        if: steps.cache.outputs.cache-hit != 'true'
-#        run: npm ci
-#      - name: test
-#        run: npm run test
-#      - name: build
-#        run: npm run build
-#      - name: Publish JS filename
-#        id: publish
-#        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
-#      - name: Upload artifacts
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: dist-files
-#          path: |
-#            dist
+  db_test:
+    environment: develop # need to create environment and environment secrets, will use those secrets from environment secrets not general secrets
+    runs-on: self-hosted
+    steps:
+      - name: print env strait
+        run: echo "POSTGRES_USER=$POSTGRES_USER" # działa i tak (dostęp do zmiennej tylko w tym pliku w tym jobie)
+      - name: print env.abc
+        run: echo "POSTGRES_USER=${{env.POSTGRES_USER}}" # działa i tak (dostęp do zmiennych w całym środowisku we wszystkich plikach )
+      - name: create postgres user
+        id: test-if  # needed for "if" in next step
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"CREATE USER bla2 WITH ENCRYPTED PASSWORD 'password2';\""
+      - name: test_if list users_if_failed
+        if: failure() && steps.test-if.outcome == 'failure'         # https://docs.github.com/en/actions/reference/accessing-contextual-information-about-workflow-runs#steps-context
+        #        if: ${{ failure() && steps.test-if.outcome == 'failure' }}
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
+      - name: test_if list users_if_success # run if success
+        if: success() && steps.test-if.outcome == 'success'
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@10.250.2.24 \ "docker exec f419b8e43f98 psql -U ${{env.POSTGRES_USER}} -d ${{env.POSTGRES_DB}} -c \"SELECT rolname FROM pg_roles;\""
+  raport:
+    needs: [db_test,deploy]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "something went wrong"
+          echo "${{ toJSON(github) }}"
+
+
+  ## if
+  ## failure()      returns true when any previous Step or Job failed
+  ## success()      returns true when none previous Step or Job failed
+  ## always()       causes the step to always execute, even when cancelled
+  ## cancelled()    returns true if the workflow has been cancelled
+  lint:
+    runs-on: self-hosted
+    steps:
+      - name: get code for lint
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: lint
+        run: npm run lint
+
+  build:
+    runs-on: self-hosted
+    needs: lint
+    outputs:
+      script-file: ${{ steps.publish.outputs.script-file }}
+    steps:
+      - name: get code for test
+        uses: actions/checkout@v4
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: test
+        run: npm run test
+      - name: build
+        run: npm run build
+      - name: Publish JS filename
+        id: publish
+        run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: |
+            dist
 
   deploy:
       uses: ./.github/workflows/reusable.yaml
