@@ -93,10 +93,6 @@ jobs:
 #            dist
 
   deploy:
-    runs-on: self-hosted
-#    needs: build
-    steps:
-      - name: get build artifacts
-        uses: ./.github/workflows/reusable.yml
+      uses: ./.github/workflows/reusable.yml
 
 
