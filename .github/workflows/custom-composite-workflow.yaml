@@ -59,6 +59,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Load & cache dependencies
         uses: ./.github/actions/cache-deps
+        with:
+          caching: 'false'
       - name: lint
         run: npm run lint
 
