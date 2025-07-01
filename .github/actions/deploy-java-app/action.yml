@@ -1,0 +1,11 @@
+name: 'Deploy to selfhosted'
+description: 'Deploy a static website'
+runs:
+  using: 'node20'
+  #pre:
+  main: 'main.js'    # path to file, in this case is in the same folder as action.yml
+  #post:
+
+  ## dependencies to install in deploy-java-app
+  # npm init -y
+  # npm install @actions/core @actions/github @actions/exec
