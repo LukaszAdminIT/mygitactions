@@ -2,9 +2,9 @@ name: 'Deploy to selfhosted'
 description: 'Deploy a static website'
 runs:
   using: 'node20'
-  #pre:
+  #pre: 'setup.js' #extra java script to execute
   main: 'main.js'    # path to file, in this case is in the same folder as action.yml
-  #post:
+  #post: 'cleanup..js' #extra java script to execute
 
   ## dependencies to install in deploy-java-app
   # npm init -y

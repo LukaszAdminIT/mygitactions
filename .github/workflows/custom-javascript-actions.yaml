@@ -117,6 +117,8 @@ jobs:
   information:
     runs-on: self-hosted
     steps:
+      - name: get code for lint
+        uses: actions/checkout@v4
       - name: Run custom action
         uses: ./.github/actions/deploy-java-app
 
