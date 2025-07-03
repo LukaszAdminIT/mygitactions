@@ -30,7 +30,7 @@ jobs:
       - name: change project folders permissions
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "chmod -R 770 /srv/learning/ && chown -R githubactions:githubactions /srv/learning/"
       - name: get files permissions nginx
-        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions${{ matrix.host_ip_address }} "ls -la /srv/learning/${{ matrix.service_name }}_${{ matrix.op-sys }}"
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "ls -la /srv/learning/${{ matrix.service_name }}_${{ matrix.op-sys }}"
 
 
 
