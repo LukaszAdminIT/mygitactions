@@ -15,11 +15,5 @@ outputs:
   website-url:
     description: 'The URL of the deployed website.'
 runs:
-  using: 'node20'
-  #pre: 'setup.js' #extra java script to execute
-  main: 'main.js'    # path to file, in this case is in the same folder as action.yml
-  #post: 'cleanup..js' #extra java script to execute
-
-  ## dependencies to install in deploy-java-app
-  # npm init -y
-  # npm install @actions/core @actions/github @actions/exec
+  using: 'docker'
+  image: 'Dockerfile'
