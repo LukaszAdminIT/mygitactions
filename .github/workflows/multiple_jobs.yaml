@@ -26,7 +26,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "mkdir -p ${{ matrix.service_name }}_${{ matrix.op-sys }}"
       - name: copy docker file and .env file to host
         run: |
-          scp -i $HOME/.ssh/githubactions ./docker/${{ matrix.service_name }}/${{ matrix.service_name }}-docker-compose.yaml ./docker/${{ matrix.service_name }}/deploy-${{ matrix.service.name}}.sh githubactions@${{ matrix.host_ip_address }}:${{ matrix.service_name }}_${{ matrix.op-sys }}
+          scp -i $HOME/.ssh/githubactions ./docker/${{ matrix.service_name }}/${{ matrix.service_name }}-docker-compose.yaml ./docker/${{ matrix.service_name }}/deploy-${{ matrix.service_name }}.sh githubactions@${{ matrix.host_ip_address }}:${{ matrix.service_name }}_${{ matrix.op-sys }}
       - name: change project folders permissions
         run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "chmod -R /srv/learning/ && chown -R githubactions:githubactions /srv/learning/"
       - name: get files permissions nginx
