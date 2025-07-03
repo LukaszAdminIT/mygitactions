@@ -12,25 +12,25 @@ jobs:
         op-sys: [debian, rocky]
         host_ip_address: [10.250.2.24, 10.250.2.25]
         service_name: [postgres, nginx]
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Set up SSH key
-      run: |
-        echo "$HOME"
-        mkdir -p $HOME/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
-        chmod 600 $HOME/.ssh/githubactions
-    - name: create project folders
-      run: |
-        ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "mkdir -p ${{ matrix.service_name }}_${{ matrix.op-sys }}"
-    - name: copy docker file and .env file to host
-      run: |
-        scp -i $HOME/.ssh/githubactions ./docker/${{matrix.service_name }}/docker-compose.yaml ./docker/${{matrix.service_name }}/deploy-${{ matrix.servicenamenginx.sh githubactions@${{ matrix.host_ip_address }}:${{ matrix.service_name }}_${{ matrix.op-sys }}
-    - name: change project folders permissions
-      run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address } "chmod -R /srv/learning/ && chown -R githubactions:githubactions /srv/learning/"
-    - name: get files permissions nginx
-      run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions${{ matrix.host_ip_address } "ls -la /srv/learning/${{ matrix.service_name }}_${{ matrix.op-sys }}"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up SSH key
+        run: |
+          echo "$HOME"
+          mkdir -p $HOME/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/githubactions
+          chmod 600 $HOME/.ssh/githubactions
+      - name: create project folders
+        run: |
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address }} "mkdir -p ${{ matrix.service_name }}_${{ matrix.op-sys }}"
+      - name: copy docker file and .env file to host
+        run: |
+          scp -i $HOME/.ssh/githubactions ./docker/${{matrix.service_name }}/docker-compose.yaml ./docker/${{matrix.service_name }}/deploy-${{ matrix.servicenamenginx.sh githubactions@${{ matrix.host_ip_address }}:${{ matrix.service_name }}_${{ matrix.op-sys }}
+      - name: change project folders permissions
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions@${{ matrix.host_ip_address } "chmod -R /srv/learning/ && chown -R githubactions:githubactions /srv/learning/"
+      - name: get files permissions nginx
+        run: ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/githubactions githubactions${{ matrix.host_ip_address } "ls -la /srv/learning/${{ matrix.service_name }}_${{ matrix.op-sys }}"
 
 
 

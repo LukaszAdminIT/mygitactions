@@ -1,0 +1,103 @@
+  Migrating Dynamic GitLab CI Stages to GitHub Actions
+    To convert your dynamic GitLab CI pipeline (which uses Jinja templating to generate jobs and stages from a nested dictionary) into GitHub Actions, you need to understand the differences in how each system handles dynamic job generation and matrix strategies.
+    
+    Key Differences
+  GitLab CI: Supports dynamic job and stage generation using Jinja templating and variables.
+
+  GitHub Actions: Does not support dynamic job generation via templating in YAML. Instead, it uses the matrix strategy to generate multiple job runs from combinations of variables.
+    
+    Recommended Approach in GitHub Actions
+    1. Use a Matrix Strategy
+    You can define a matrix of variables (e.g., dev_type, node_type, host_ip_address, service_name) to generate jobs for each combination. This is the closest equivalent to your Jinja loop logic.
+    
+    Example Matrix Definition
+    text
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          dev_type: [dev, prod]
+          node_type: [node1, node2]
+          host_ip_address: [10.0.0.1, 10.0.0.2]
+          service_name: [serviceA, serviceB]
+      steps:
+        - name: Print environment
+          run: printenv
+        # ... (other steps as below)
+    You can generate the matrix dynamically using a script or by maintaining a JSON/YAML file with all combinations.
+    
+    2. Job Steps for SSH and Docker Compose
+    Each job in the matrix can run the deployment steps using SSH and Docker Compose, similar to your GitLab script. Use secrets for sensitive data like SSH keys.
+    
+    Example Steps
+    text
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH key
+      run: |
+        echo "${{ secrets.ID_RSA }}" > id_rsa
+        chmod 400 id_rsa
+
+    - name: Create remote directory
+      run: |
+        ssh -i id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ matrix.host_ip_address }} \
+          "mkdir -p ${{ matrix.service_name }}_${{ matrix.node_type }}_${{ env.CANARY_TYPE }}"
+
+    - name: Copy docker-compose and env
+      run: |
+        scp -i id_rsa docker-compose.yml .env ${{ secrets.SERVER_USER }}@${{ matrix.host_ip_address }}:${{ matrix.service_name }}_${{ matrix.node_type }}_${{ env.CANARY_TYPE }}
+
+    - name: Set permissions
+      run: |
+        ssh -i id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ matrix.host_ip_address }} \
+          "chmod -R 770 ${{ matrix.service_name }}_${{ matrix.node_type }}_${{ env.CANARY_TYPE }}"
+
+    - name: Pull Docker image
+      run: |
+        ssh -i id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ matrix.host_ip_address }} \
+          "cd ${{ matrix.service_name }}_${{ matrix.node_type }}_${{ env.CANARY_TYPE }} && source ./.env && docker pull ${REGISTRY}/${GROUP}/${APPLICATION}:${APPLICATION_VERSION}"
+
+    - name: Restart Docker Compose
+      run: |
+        ssh -i id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ matrix.host_ip_address }} \
+          "cd ${{ matrix.service_name }}_${{ matrix.node_type }}_${{ env.CANARY_TYPE }} && docker compose down && docker compose up -d"
+    3. Manual Triggers and Allow Failure
+  Manual Triggers: Use workflow_dispatch to allow manual runs.
+
+  Allow Failure: Use continue-on-error: true in steps or jobs.
+    
+    Example
+    text
+  on:
+    workflow_dispatch:
+
+  jobs:
+    deploy:
+      # ... (matrix and steps as above)
+      continue-on-error: true
+    4. Organizing the Workflow
+    Place your workflow YAML in .github/workflows/.
+    
+    Use GitHub secrets for sensitive variables.
+    
+    If your matrix is very large or needs to be generated from a data structure, consider generating the matrix JSON in a prior step or using a reusable workflow.
+    
+    Limitations and Tips
+  No direct Jinja templating: All job definitions must be static or generated via matrix.
+
+  Matrix size: GitHub Actions supports up to 256 jobs per matrix.
+
+  Dynamic matrix: For highly dynamic scenarios, generate the matrix in a prior step and pass it as an output to a reusable workflow.
+    
+    References
+    GitHub Actions matrix strategy and dynamic job generation.
+    
+    Migrating from GitLab CI/CD to GitHub Actions.
+    
+    Example of SSH and Docker Compose deployment in GitHub Actions.
+
+  Summary:
+    You must replace your Jinja-based dynamic job generation with a matrix strategy in GitHub Actions, mapping your variables (dev_type, node_type, host_ip_address, service_name) to matrix entries. Each job will then run the deployment steps using SSH and Docker Compose, with manual triggers and error handling as needed.
