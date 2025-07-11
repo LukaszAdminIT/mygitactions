@@ -15,7 +15,7 @@ jobs:
       data: ${{ steps.create_id.outputs.name }}
   data-reciever:
     runs-on: ubuntu-latest
-    needs: ["data-sender"]
+    needs: ["data-passing"]
     steps:
       - name: Recieve Data
         run: |
