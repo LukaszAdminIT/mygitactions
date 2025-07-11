@@ -5,7 +5,7 @@ on:
 
 jobs:
   data-passing:
-    runs_on: selfhosted
+    runs-on: selfhosted
     steps:
       - name: Create data
         id: create
