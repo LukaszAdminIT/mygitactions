@@ -5,7 +5,7 @@ on:
 
 jobs:
   data-passing:
-    runs-on: selfhosted
+    runs-on: ubuntu-latest
     steps:
       - name: Create data
         id: create
