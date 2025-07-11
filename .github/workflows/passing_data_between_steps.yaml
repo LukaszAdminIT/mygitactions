@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Create data
         id: create
-        run: echo "name=Lukasz" >> GITHUB_OUTPUT
+        run: echo "name=Lukasz" >> $GITHUB_OUTPUT
       - name: Recieve Data
         run: |
           echo ${{ steps.create.otputs=name }}
