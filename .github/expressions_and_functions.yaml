@@ -1,0 +1,52 @@
+name: 14 Expressions And Functions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+
+    env:
+      MESSAGE: 'Hello, World!'
+      FILE_CONTENT: 'This is the content of the file.'
+      ARRAY: ('element1', 'element2', 'element3')
+      TEST_JSON_DATA: '{"numbers": ["1", "2", "3"]}'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use contains function
+        run: |
+          echo "${{ contains(env.MESSAGE, 'Hello') }}"
+
+      - name: Use startsWith function
+        run: |
+          echo "${{ startsWith(env.FILE_CONTENT, 'This') }}"
+
+      - name: Use endsWith function
+        run: |
+          echo "${{ endsWith(env.FILE_CONTENT, 'file.') }}"
+
+      - name: Use format function
+        run: |
+          echo "${{ format('Formatted: {0}', env.MESSAGE) }}"
+
+      - name: Use toJSON function
+        id: tojson
+        run: |
+          echo "${{ toJSON(env.TEST_JSON_DATA) }}"
+          echo "result=${{ toJSON(env.TEST_JSON_DATA) }}" >> $GITHUB_OUTPUT
+
+      - name: Use fromJSON function
+        run: |
+          echo "${{ fromJSON(steps.tojson.outputs.result).numbers }}"
+
+      - name: Use join function
+        run: |
+          echo "${{ join(fromJSON(steps.tojson.outputs.result).numbers, ' ') }}"
+
+      - name: Use hashFiles function
+        run: |
+          echo "Hash of all files: ${{ hashFiles('**') }}"

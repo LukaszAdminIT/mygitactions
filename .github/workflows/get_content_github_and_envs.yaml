@@ -1,4 +1,4 @@
-name: get content
+name: get content of github and environments
 
 on:
   workflow_dispatch:
