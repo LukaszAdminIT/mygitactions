@@ -10,7 +10,7 @@ jobs:
       - name: print variables
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-          run: |
-            echo "$GITHUB_CONTEXT"
+        run: |
+          echo "$GITHUB_CONTEXT"
       - name: print env
         run: env

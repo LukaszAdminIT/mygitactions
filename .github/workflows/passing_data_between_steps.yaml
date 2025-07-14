@@ -14,4 +14,3 @@ jobs:
       - name: Recieve Data
         run: |
           echo ${{ steps.create.outputs.name }}
-# aa
