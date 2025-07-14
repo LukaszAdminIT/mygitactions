@@ -1,0 +1,16 @@
+name: get content
+
+on:
+  workflow_dispatch:
+
+jobs:
+  print-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print variables
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          run: |
+            echo "$GITHUB_CONTEXT"
+      - name: print env
+        run: env
